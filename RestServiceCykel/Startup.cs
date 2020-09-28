@@ -25,6 +25,14 @@ namespace RestServiceCykel
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin", 
+                    builder => builder.WithOrigins("zea.dk"));
+                options.AddPolicy("AllowAnyOrigin",
+                builder => builder.WithOrigins());
+                
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +44,8 @@ namespace RestServiceCykel
             }
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
